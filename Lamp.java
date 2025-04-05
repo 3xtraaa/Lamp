@@ -87,7 +87,8 @@ public class Lamp{
      * The height of the stem is the same as the diameter of the bulb
      * The width of the stem is a quarter of its height
      */
-    public void draw(){
+    public void draw()
+    {
         /*# YOUR CODE HERE */
         // draw the stem (darkGrey rectangle)
         double stemX = lampX - STEM_WIDTH / 2; // X position for the stem to center it
@@ -101,21 +102,27 @@ public class Lamp{
         double bulbX = lampX - LAMP_SIZE / 2; // X pos of bulb
         double bulbY = lampY - LAMP_HEIGHT; // Y pos of bulb
         
-        if 
+        // checks boolean to set colour
+         if (lampOn) {
+            UI.setColor(color);
+        } else {
+            UI.setColor(Color.BLACK);
+        }
+    
         // draw the bulb
         UI.fillOval(bulbX, bulbY, LAMP_SIZE, LAMP_SIZE); // last two are width and height of circle
-        
-        
     }   
 
     /** 
      * Reports whether the point (x,y) is on the bulb.
      * (x and y represent the position where the mouse was released):
      */
-    public boolean onBulb(double x, double y){
+    public boolean onBulb(double x, double y)
+    {
         // an easy approximation is to pretend it is the enclosing rectangle.
         // It is nicer to do a little bit of geometry and get it right
         /*# YOUR CODE HERE */
+        
         
     }   
 
