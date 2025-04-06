@@ -122,7 +122,8 @@ import java.awt.Color;
             
             // Calculate center of the bulb
             double bulbCenterX = lampX;
-            double bulbCenterY = lampY - LAMP_HEIGHT; // minus because y value increases vertically downwards and bulb is at end of lampHeight (above stem)
+            double bulbCenterY = lampY - LAMP_HEIGHT + (LAMP_SIZE / 2);
+ // minus because y value increases vertically downwards and bulb is at end of lampHeight (above stem)
             
             // Calculate distance from the point (x, y) and the center of the bulb
             double dx = x - bulbCenterX; // how far away from center?
