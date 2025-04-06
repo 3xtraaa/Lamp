@@ -38,8 +38,16 @@ public class LampController
                 lamp.changeColor();
             }
             else if (lamp.onStem(x, y))
-            {
-                lamp.turnOff();
+            {   
+                if(lamp.lampOn == true)
+                {
+                    lamp.turnOff();
+                }
+                
+                else
+                {
+                   lamp.lampOn = true; 
+                }
             }
             lamp.draw();
         }

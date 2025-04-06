@@ -60,12 +60,12 @@ import java.awt.Color;
         public static final double LAMP_HEIGHT = 80; // height of the stem
         
         //fields
+        public boolean lampOn = false; // Sets lamp as 'off' using boolean
+        
         private double lampX; // lamp's x pos
         private double lampY; // lamp's y pos
         
         private Color color; // current colour of lamp (will be seen when on)
-        
-        private boolean lampOn = false; // Sets lamp as 'off' using boolean
     
         /** Constructor: passed the initial position.
          * Initialises the fields/instance variables
