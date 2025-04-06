@@ -52,105 +52,136 @@ import java.awt.Color;
  *     Note: Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f) will return a random bright Colour.
  */
 
-public class Lamp{
-
-    public static final double LAMP_SIZE = 80;  // diameter of the bulb
-    public static final double STEM_WIDTH = LAMP_SIZE/4; // width of the stem is LAMP_SIZE/4 (20)
-    public static final double LAMP_HEIGHT = 80; // height of the stem
-    
-    //fields
-    private double lampX; // lamp's x pos
-    private double lampY; // lamp's y pos
-    
-    private Color color; // current colour of lamp (will be seen when on)
-    
-    private boolean lampOn = false; // Sets lamp as 'off' using boolean
-    
-//    private double left;
-//    private double top;
-//    private double bottom;
-
-    /** Constructor: passed the initial position.
-     * Initialises the fields/instance variables
-     */
-    public Lamp(double x, double y, Color col)
+    public class Lamp
     {
-        this.lampX = x;
-        this.lampY = y;
-        this.color = col;     
-    }
-
-    /**
-     * draws the lamp at its current position:
-     * - the bulb of the right colour.
-     * - the stem darkGray
-     * The height of the stem is the same as the diameter of the bulb
-     * The width of the stem is a quarter of its height
-     */
-    public void draw()
-    {
-        /*# YOUR CODE HERE */
-        // draw the stem (darkGrey rectangle)
-        double stemX = lampX - STEM_WIDTH / 2; // X position for the stem to center it
-        double stemY = lampY; // Y posiiton of stem
+    
+        public static final double LAMP_SIZE = 80;  // diameter of the bulb
+        public static final double STEM_WIDTH = LAMP_SIZE/4; // width of the stem is LAMP_SIZE/4 (20)
+        public static final double LAMP_HEIGHT = 80; // height of the stem
         
-        // set colour of stem to dark grey, draw stem
-        UI.setColor(Color.darkGray);
-        UI.fillRect(stemX, stemY, STEM_WIDTH, LAMP_HEIGHT);
+        //fields
+        private double lampX; // lamp's x pos
+        private double lampY; // lamp's y pos
         
-        // draw the bulb of the lamp
-        double bulbX = lampX - LAMP_SIZE / 2; // X pos of bulb
-        double bulbY = lampY - LAMP_HEIGHT; // Y pos of bulb
+        private Color color; // current colour of lamp (will be seen when on)
         
-        // checks boolean to set colour
-         if (lampOn) {
-            UI.setColor(color);
-        } else {
-            UI.setColor(Color.BLACK);
+        private boolean lampOn = false; // Sets lamp as 'off' using boolean
+    
+        /** Constructor: passed the initial position.
+         * Initialises the fields/instance variables
+         */
+        public Lamp(double x, double y, Color col)
+        {
+            this.lampX = x;
+            this.lampY = y;
+            this.color = col;     
         }
     
-        // draw the bulb
-        UI.fillOval(bulbX, bulbY, LAMP_SIZE, LAMP_SIZE); // last two are width and height of circle
-    }   
-
-    /** 
-     * Reports whether the point (x,y) is on the bulb.
-     * (x and y represent the position where the mouse was released):
-     */
-    public boolean onBulb(double x, double y)
-    {
-        // an easy approximation is to pretend it is the enclosing rectangle.
-        // It is nicer to do a little bit of geometry and get it right
-        /*# YOUR CODE HERE */
+        /**
+         * draws the lamp at its current position:
+         * - the bulb of the right colour.
+         * - the stem darkGray
+         * The height of the stem is the same as the diameter of the bulb
+         * The width of the stem is a quarter of its height
+         */
+        public void draw()
+        {
+            /*# YOUR CODE HERE */
+            // draw the stem (darkGrey rectangle)
+            double stemX = lampX - STEM_WIDTH / 2; // X position for the stem to center it
+            double stemY = lampY; // Y posiiton of stem
+            
+            // set colour of stem to dark grey, draw stem
+            UI.setColor(Color.darkGray);
+            UI.fillRect(stemX, stemY, STEM_WIDTH, LAMP_HEIGHT);
+            
+            // draw the bulb of the lamp
+            double bulbX = lampX - LAMP_SIZE / 2; // X pos of bulb
+            double bulbY = lampY - LAMP_HEIGHT; // Y pos of bulb
+            
+            // checks boolean to set colour
+             if (lampOn) {
+                UI.setColor(color);
+            } else {
+                UI.setColor(Color.BLACK);
+            }
         
-        
-    }   
-
-    /**
-     * Reports whether the point (x,y) is on the stem.
-     * (x and y represent the position where the mouse was released):
-     */
-    public boolean onStem(double x, double y){
-        /*# YOUR CODE HERE */
- 
-    }   
-
-    /**
-     * Turns the light off.
-     * Does not redraw
-     */
-    public void turnOff(){
-        /*# YOUR CODE HERE */
-
-    }   
-
-    /** changeColor method (no parameters):
-     * Turns the light on (if it is off)
-     * Changes its color to a random bright colour (if it is already on).
-     * Does not redraw
-     */
-    public void changeColor(){
-        /*# YOUR CODE HERE */
-
-    }   
-}
+            // draw the bulb
+            UI.fillOval(bulbX, bulbY, LAMP_SIZE, LAMP_SIZE); // last two are width and height of circle
+        }   
+    
+        /** 
+         * Reports whether the point (x,y) is on the bulb.
+         * (x and y represent the position where the mouse was released):
+         */
+        public boolean onBulb(double x, double y)
+        {
+            // an easy approximation is to pretend it is the enclosing rectangle.
+            // It is nicer to do a little bit of geometry and get it right
+            /*# YOUR CODE HERE */
+            
+            // Calculate center of the bulb
+            double bulbCenterX = lampX;
+            double bulbCenterY = lampY - LAMP_HEIGHT; // minus because y value increases vertically downwards and bulb is at end of lampHeight (above stem)
+            
+            // Calculate distance from the point (x, y) and the center of the bulb
+            double dx = x - bulbCenterX; // how far away from center?
+            double dy = y - bulbCenterY;
+            
+            // Calculate the distance squared (to compare with squared radius)
+            double distanceSquared = dx * dx + dy * dy;
+            
+            // Radius of bulb squared
+            double radiusSquared = (LAMP_SIZE / 2) * (LAMP_SIZE / 2);
+            
+            // returns True if the click is within the radius of the bulb
+            return distanceSquared <= radiusSquared;
+        }   
+    
+        /**
+         * Reports whether the point (x,y) is on the stem.
+         * (x and y represent the position where the mouse was released):
+         */
+        public boolean onStem(double x, double y)
+        {
+            /*# YOUR CODE HERE */
+            double leftX = lampX - STEM_WIDTH / 2;
+            double rightX = lampX + STEM_WIDTH / 2;
+            double topY = lampY;
+            double bottomY = lampY + LAMP_HEIGHT;
+            
+            // Returns true if mouse click is within rectangle
+            return x >= leftX && x <= rightX && y >= topY && y <= bottomY;
+        }   
+    
+        /**
+         * Turns the light off.
+         * Does not redraw
+         */
+        public void turnOff()
+        {
+            /*# YOUR CODE HERE */
+            lampOn = false;
+        }   
+    
+        /** changeColor method (no parameters):
+         * Turns the light on (if it is off)
+         * Changes its color to a random bright colour (if it is already on).
+         * Does not redraw
+         */
+        public void changeColor()
+        {
+            /*# YOUR CODE HERE */
+            if (lampOn == false) // could also use !lampOn (means NOT lampOn)
+                                // basically: If the lamp is off (!false)
+            {
+                lampOn = true;
+            }
+            
+            else
+            {
+                // Assign random bright colour to the lamp
+                color = Color.getHSBColor((float)(Math.random()), 1.0f, 1.0f);
+            }
+        } 
+    }
